@@ -1,0 +1,37 @@
+{
+  "name": "dicoding-openmusic-v1",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./src/server.js",
+    "dev": "nodemon ./src/main.js",
+    "lint": "eslint ./src",
+    "migrate": "node-pg-migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fauzora/dicoding-submission-openmusic.git"
+  },
+  "keywords": [
+    "dicoding"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fauzora/dicoding-submission-openmusic/issues"
+  },
+  "homepage": "https://github.com/fauzora/dicoding-submission-openmusic#readme",
+  "description": "",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.12",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.21.0",
+    "joi": "^17.13.3",
+    "nanoid": "^5.1.2",
+    "node-pg-migrate": "^7.9.1",
+    "pg": "^8.13.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
