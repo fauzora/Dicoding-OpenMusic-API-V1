@@ -1,18 +1,11 @@
-/**
- * @type {import('node-pg-migrate').ColumnDefinitions | undefined}
- */
-exports.shorthands = undefined;
+exports.up = (pgm) => {
+  pgm.createTable("albums", {
+    id: { type: "varchar(50)", notNull: true, primaryKey: true },
+    name: { type: "varchar(255)", notNull: true },
+    year: { type: "integer", notNull: true },
+  });
+};
 
-/**
- * @param pgm {import('node-pg-migrate').MigrationBuilder}
- * @param run {() => void | undefined}
- * @returns {Promise<void> | void}
- */
-exports.up = (pgm) => {};
-
-/**
- * @param pgm {import('node-pg-migrate').MigrationBuilder}
- * @param run {() => void | undefined}
- * @returns {Promise<void> | void}
- */
-exports.down = (pgm) => {};
+exports.down = (pgm) => {
+  pgm.dropTable("albums");
+};
