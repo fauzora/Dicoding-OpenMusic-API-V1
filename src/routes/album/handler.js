@@ -11,9 +11,9 @@ export default class AlbumHandler {
     let { year, name } = request.payload;
     this._validator.post(request.payload);
 
-    const id = `album-${nanoid(16)}`;
+    let id = `album-${nanoid(16)}`;
 
-    const query = {
+    let query = {
       text: "INSERT INTO albums VALUES ($1, $2, $3) RETURNING id, name",
       values: [id, name, year],
     };
@@ -36,12 +36,18 @@ export default class AlbumHandler {
   async getAlbumById(request) {
     let { id } = request.params;
 
-    const query = {
+    let query = {
       text: "SELECT id, name, year FROM albums WHERE id = $1",
       values: [id],
     };
+    let songsQuery = {
+      text: "SELECT id, title, performer FROM songs WHERE album_id = $1",
+      values: [id],
+    };
 
-    const { rows } = await this._pool.query(query);
+    let { rows } = await this._pool.query(query);
+
+    let { rows: rowsSong } = await this._pool.query(songsQuery);
 
     if (!rows.length) {
       throw new NotFoundError("Album tidak ditemukan");
@@ -49,7 +55,7 @@ export default class AlbumHandler {
 
     return {
       data: {
-        album: rows[0],
+        album: { ...rows[0], songs: rowsSong },
       },
       message: `Album ${rows[0].name} ditemukan`,
       status: "success",
@@ -61,7 +67,7 @@ export default class AlbumHandler {
     let { id } = request.params;
     this._validator.put(request.payload);
 
-    const query = {
+    let query = {
       text: "UPDATE albums SET name = $1, year = $2 WHERE id = $3 RETURNING id, name, year",
       values: [name, year, id],
     };
@@ -84,12 +90,12 @@ export default class AlbumHandler {
   async deleteAlbumById(request, h) {
     let { id } = request.params;
 
-    const query = {
+    let query = {
       text: "DELETE FROM albums WHERE id = $1 RETURNING id, name",
       values: [id],
     };
 
-    const { rows } = await this._pool.query(query);
+    let { rows } = await this._pool.query(query);
 
     if (!rows.length) {
       throw new NotFoundError("Album tidak ditemukan");

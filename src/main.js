@@ -1,6 +1,7 @@
 import Hapi from "@hapi/hapi";
 import Common from "./configs/common.js";
 import AlbumPlugin from "./plugins/album.js";
+import SongPlugin from "./plugins/songs.js";
 import { ClientError } from "./configs/response.js";
 
 class Main {
@@ -36,6 +37,9 @@ class Main {
     await server.register([
       {
         plugin: AlbumPlugin.getPlugin(),
+      },
+      {
+        plugin: SongPlugin.getPlugin(),
       },
     ]);
 

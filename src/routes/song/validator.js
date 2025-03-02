@@ -1,13 +1,17 @@
 import Joi from "joi";
 import { PayloadError } from "../../configs/response.js";
 
-export default class AlbumValidator {
+export default class SongValidator {
   constructor() {}
 
   post(payload) {
     let schema = Joi.object({
-      name: Joi.string().required(),
+      title: Joi.string().required(),
       year: Joi.number().required(),
+      genre: Joi.string().required(),
+      performer: Joi.string().required(),
+      duration: Joi.number(),
+      albumId: Joi.string(),
     });
 
     let result = schema.validate(payload);
@@ -19,8 +23,12 @@ export default class AlbumValidator {
 
   put(payload) {
     let schema = Joi.object({
-      name: Joi.string().required(),
+      title: Joi.string().required(),
       year: Joi.number().required(),
+      genre: Joi.string().required(),
+      performer: Joi.string().required(),
+      duration: Joi.number(),
+      albumId: Joi.string(),
     });
 
     let result = schema.validate(payload);
