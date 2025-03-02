@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
-    "start": "NODE_ENV=production node ./src/server.js",
+    "start": "node ./src/main.js",
     "dev": "nodemon ./src/main.js",
     "lint": "eslint ./src",
     "migrate": "node-pg-migrate"
