@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
-import { NotFoundError } from "../../configs/response.js";
+import { nanoid } from 'nanoid';
+import { NotFoundError } from '../../configs/response.js';
 
 export default class SongHandler {
   constructor(validator, pool) {
@@ -13,7 +13,7 @@ export default class SongHandler {
 
     let id = `songs-${nanoid(16)}`;
     let query = {
-      text: "INSERT INTO songs VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, title",
+      text: 'INSERT INTO songs VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, title',
       values: [id, title, year, genre, performer, duration, albumId],
     };
 
@@ -25,7 +25,7 @@ export default class SongHandler {
           songId: rows[0].id,
         },
         message: `Berhasil menambah lagu ${rows[0].title}`,
-        status: "success",
+        status: 'success',
       })
       .code(201);
 
@@ -33,7 +33,7 @@ export default class SongHandler {
   }
 
   async getSongs(request) {
-    let query = "SELECT id, title, performer FROM songs";
+    let query = 'SELECT id, title, performer FROM songs';
 
     let reqQuery = request.query;
     if (Object.keys(reqQuery).length) {
@@ -41,19 +41,19 @@ export default class SongHandler {
         .map((queries) => {
           return `${queries} ILIKE '%${reqQuery[queries]}%'`;
         })
-        .join(" AND ")}`;
+        .join(' AND ')}`;
     }
 
     let { rows } = await this._pool.query(query);
 
-    if (!rows.length) throw new NotFoundError("Lagu tidak ditemukan");
+    if (!rows.length) throw new NotFoundError('Lagu tidak ditemukan');
 
     return {
       data: {
         songs: rows,
       },
       message: `Lagu ${rows[0].title} ditemukan`,
-      status: "success",
+      status: 'success',
     };
   }
 
@@ -61,14 +61,14 @@ export default class SongHandler {
     let { id } = request.params;
 
     let query = {
-      text: "SELECT * FROM songs WHERE id = $1",
+      text: 'SELECT * FROM songs WHERE id = $1',
       values: [id],
     };
 
     let { rows } = await this._pool.query(query);
 
     if (!rows.length) {
-      throw new NotFoundError("Lagu tidak ditemukan");
+      throw new NotFoundError('Lagu tidak ditemukan');
     }
 
     return {
@@ -76,7 +76,7 @@ export default class SongHandler {
         song: rows[0],
       },
       message: `Lagu ${rows[0].name} ditemukan`,
-      status: "success",
+      status: 'success',
     };
   }
 
@@ -86,14 +86,14 @@ export default class SongHandler {
     this._validator.put(request.payload);
 
     let query = {
-      text: "UPDATE songs SET title = $1, year = $2, genre = $3, performer = $4, duration = $5, album_id = $6 WHERE id = $7 RETURNING title",
+      text: 'UPDATE songs SET title = $1, year = $2, genre = $3, performer = $4, duration = $5, album_id = $6 WHERE id = $7 RETURNING title',
       values: [title, year, genre, performer, duration, albumId, id],
     };
 
     let { rows } = await this._pool.query(query);
 
     if (!rows.length) {
-      throw new NotFoundError("Lagu tidak ditemukan");
+      throw new NotFoundError('Lagu tidak ditemukan');
     }
 
     return {
@@ -101,7 +101,7 @@ export default class SongHandler {
         song: rows[0],
       },
       message: `Lagu ${rows[0].title} berhasil diupdate`,
-      status: "success",
+      status: 'success',
     };
   }
 
@@ -109,21 +109,21 @@ export default class SongHandler {
     let { id } = request.params;
 
     let query = {
-      text: "DELETE FROM songs WHERE id = $1 RETURNING id, title",
+      text: 'DELETE FROM songs WHERE id = $1 RETURNING id, title',
       values: [id],
     };
 
     let { rows } = await this._pool.query(query);
 
     if (!rows.length) {
-      throw new NotFoundError("Lagu tidak ditemukan");
+      throw new NotFoundError('Lagu tidak ditemukan');
     }
 
     let response = h
       .response({
         data: {},
         message: `Berhasil menghapus lagu ${rows[0].title}`,
-        status: "success",
+        status: 'success',
       })
       .code(200);
 

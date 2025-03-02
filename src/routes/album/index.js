@@ -6,29 +6,29 @@ export default class Routes {
   getRoutes() {
     return [
       {
-        method: "POST",
-        path: "/albums",
+        method: 'POST',
+        path: '/albums',
         handler: (request, h) => {
           return this._handler.createAlbum(request, h);
         },
       },
       {
-        method: "GET",
-        path: "/albums/{id}",
+        method: 'GET',
+        path: '/albums/{id}',
         handler: (request) => {
           return this._handler.getAlbumById(request);
         },
       },
       {
-        method: "PUT",
-        path: "/albums/{id}",
+        method: 'PUT',
+        path: '/albums/{id}',
         handler: (request) => {
           return this._handler.updateAlbumById(request);
         },
       },
       {
-        method: "DELETE",
-        path: "/albums/{id}",
+        method: 'DELETE',
+        path: '/albums/{id}',
         handler: (request, h) => {
           return this._handler.deleteAlbumById(request, h);
         },

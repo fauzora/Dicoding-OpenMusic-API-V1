@@ -1,8 +1,8 @@
-import Hapi from "@hapi/hapi";
-import Common from "./configs/common.js";
-import AlbumPlugin from "./plugins/album.js";
-import SongPlugin from "./plugins/songs.js";
-import { ClientError } from "./configs/response.js";
+import Hapi from '@hapi/hapi';
+import Common from './configs/common.js';
+import AlbumPlugin from './plugins/album.js';
+import SongPlugin from './plugins/songs.js';
+import { ClientError } from './configs/response.js';
 
 class Main {
   constructor() {
@@ -17,12 +17,12 @@ class Main {
       port,
       routes: {
         cors: {
-          origin: ["*"],
+          origin: ['*'],
         },
       },
     });
 
-    server.ext("onPreResponse", ({ response }, h) => {
+    server.ext('onPreResponse', ({ response }, h) => {
       if (response instanceof ClientError)
         return h
           .response({
@@ -52,5 +52,5 @@ class Main {
   let server = await MainInstance.InitialServer();
 
   await server.start();
-  console.log(`Server jalan di ${server.info.uri}`);
+  console.info(`Server jalan di ${server.info.uri}`);
 })();

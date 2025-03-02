@@ -6,36 +6,36 @@ export default class Routes {
   getRoutes() {
     return [
       {
-        method: "POST",
-        path: "/songs",
+        method: 'POST',
+        path: '/songs',
         handler: (request, h) => {
           return this._handler.createSong(request, h);
         },
       },
       {
-        method: "GET",
-        path: "/songs",
+        method: 'GET',
+        path: '/songs',
         handler: (request) => {
           return this._handler.getSongs(request);
         },
       },
       {
-        method: "GET",
-        path: "/songs/{id}",
+        method: 'GET',
+        path: '/songs/{id}',
         handler: (request) => {
           return this._handler.getSongById(request);
         },
       },
       {
-        method: "PUT",
-        path: "/songs/{id}",
+        method: 'PUT',
+        path: '/songs/{id}',
         handler: (request) => {
           return this._handler.updateSongById(request);
         },
       },
       {
-        method: "DELETE",
-        path: "/songs/{id}",
+        method: 'DELETE',
+        path: '/songs/{id}',
         handler: (request, h) => {
           return this._handler.deleteSongById(request, h);
         },

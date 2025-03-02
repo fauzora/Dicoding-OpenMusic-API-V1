@@ -1,5 +1,5 @@
-import Joi from "joi";
-import { PayloadError } from "../../configs/response.js";
+import Joi from 'joi';
+import { PayloadError } from '../../configs/response.js';
 
 export default class SongValidator {
   constructor() {}
