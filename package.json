@@ -8,6 +8,7 @@
     "lint": "eslint ./src",
     "migrate": "node-pg-migrate"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fauzora/dicoding-submission-openmusic.git"
