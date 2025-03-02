@@ -1,5 +1,7 @@
 import Hapi from "@hapi/hapi";
 import Common from "./configs/common.js";
+import AlbumPlugin from "./plugins/album.js";
+import { ClientError } from "./configs/response.js";
 
 class Main {
   constructor() {
@@ -18,6 +20,24 @@ class Main {
         },
       },
     });
+
+    server.ext("onPreResponse", ({ response }, h) => {
+      if (response instanceof ClientError)
+        return h
+          .response({
+            message: response.message,
+            status: 'fail',
+          })
+          .code(response.statusCode);
+
+      return h.continue;
+    });
+
+    await server.register([
+      {
+        plugin: AlbumPlugin.getPlugin(),
+      },
+    ]);
 
     return server;
   }
